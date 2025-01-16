@@ -21,6 +21,7 @@ tracing-subscriber = "0.3.19"
 utoipa = { version = "5.3.1", features = ["axum_extras"] }
 utoipa-swagger-ui = { version = "9.0.0", features = ["axum"] }
 migration = { path = "migration" }
+figment = { version = "=0.10.19", features = ["env", "serde_json", "json", "parse-value"] }
 
 [build-dependencies]
 tonic-build = "0.12"

@@ -1,6 +1,9 @@
+mod config;
+
 use std::error::Error;
 use sea_orm::Database;
 use migration::{Migrator, MigratorTrait};
+use config::config::get_config;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -8,9 +11,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     tracing_subscriber::fmt::init();
 
-    let server_port_address = std::env::var("SERVER")?;
-    let db_url = std::env::var("DATABASE_URL")?;
-    let pool = Database::connect(db_url).await?;
+    let config = get_config();
+    let pool = Database::connect(config.database_url).await?;
     
     
     Migrator::up(&pool, None).await?;
