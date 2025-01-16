@@ -1,6 +1,9 @@
-FROM rust:1.79
+FROM rust:1.84 AS builder
 
-WORKDIR /usr/src/server
+WORKDIR /app
 COPY . .
 RUN cargo build --release
-CMD ["/usr/src/server/target/release/server"]
+
+FROM scratch
+COPY --from=builder /app/target/release/server /server
+CMD ["/server"]

@@ -3,4 +3,28 @@ name = "rs-configuration"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = ["migration"]
+
 [dependencies]
+anyhow = "1.0.95"
+axum = "0.8.1"
+color-eyre = "0.6.3"
+dotenvy = "0.15.7"
+futures = "0.3.31"
+sea-orm = { version = "=1.1.4", features = ["runtime-tokio-rustls", "macros", "sqlx-postgres", "with-uuid"] }
+serde = "1.0.217"
+sqlx = "=0.8.3"
+tokio = { version = "1.43.0", features = ["full"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
+utoipa = { version = "5.3.1", features = ["axum_extras"] }
+utoipa-swagger-ui = { version = "9.0.0", features = ["axum"] }
+migration = { path = "migration" }
+
+[build-dependencies]
+tonic-build = "0.12"
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
