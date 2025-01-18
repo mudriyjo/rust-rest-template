@@ -1,8 +1,9 @@
 mod config;
-mod entity;
+mod controller;
+mod event;
 
 use std::error::Error;
-use axum::{response::{IntoResponse, Response}, routing::get, Extension, Json};
+use axum::{response::{IntoResponse, Response}, routing::get, routing::post, Extension, Json};
 use sea_orm::{Database};
 use migration::{Migrator, MigratorTrait};
 use config::config::get_config;
@@ -59,6 +60,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let router = axum::Router::new()
         .route("/", get(hello_world))
+        .route("/config", post(controller::controller::create_config))
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", openapi))
         .layer(Extension(pool.clone()));
 
